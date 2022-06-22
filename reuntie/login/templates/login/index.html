@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      .navBar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+      }
+      .links {
+        text-decoration: none;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <ul class="nav nav-tabs navBar">
+      <ul class="nav nav-tabs" style="border: none">
+        <li class="nav-item">
+          <button type="button" class="btn btn-primary">
+            <a
+              class="nav-link active links"
+              aria-current="page"
+              style="color: white"
+              href="#"
+              >Reunite</a
+            >
+          </button>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item" style="margin-left: 30px">
+          <button type="button" class="btn btn-primary">
+            <a class="nav-link links" style="color: white" href="/profile"
+              >Update</a
+            >
+          </button>
+        </li>
+        {% endif %}
+      </ul>
+      <ul class="nav nav-tabs" style="border: none">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <button type="button" class="btn btn-danger">
+            <a
+              class="nav-link active links"
+              style="color: white"
+              aria-current="page"
+              href="/signout"
+            >
+              Logout
+            </a>
+          </button>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <button type="button" class="btn btn-primary">
+            <a
+              class="nav-link active links"
+              style="color: white"
+              aria-current="page"
+              href="/signin"
+            >
+              Login
+            </a>
+          </button>
+        </li>
+        <li class="nav-item" style="margin-left: 30px">
+          <button type="button" class="btn btn-success">
+            <a
+              class="nav-link active links"
+              style="color: white"
+              aria-current="page"
+              href="/signup"
+            >
+              Sign Up
+            </a>
+          </button>
+        </li>
+        {% endif %}
+      </ul>
+    </ul>
+
+    {% for message in messages %}
+    <div
+      class="alert alert-{{ message.tags }} alert-dismissible fade show"
+      role="alert"
+    >
+      <strong>Message:</strong> {{ message }}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    {% endfor %}
+
+    <div class="container"><h3>Welcome to Reuntie</h3></div>
+
+    <div class="container">
+      {% if user.is_authenticated %}
+      <h3>Hello {{user.first_name}}!</h3>
+      <h4>You're successfully logged in.</h4>
+      {% else %}
+      <h4>Please Sign In or Sign Up to proceed further ...</h4>
+      {% endif %}
+    </div>
+  </body>
+</html>
