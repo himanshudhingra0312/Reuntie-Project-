@@ -11,13 +11,23 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from . info import *
+# from . info import *
+from dotenv import load_dotenv
+load_dotenv()
+import os 
 
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_HOST = EMAIL_HOST
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-EMAIL_PORT = EMAIL_PORT
+
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +37,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=t6dw#a+$w!#rj%qpj!eqo8e$-r)=gtql0bu)bx4a@v%jk)q)&'
+
+SECRET_KEY=os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,6 +49,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'login.apps.LoginConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +59,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 AUTH_USER_MODEL='login.User'
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

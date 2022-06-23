@@ -55,7 +55,7 @@ def mail_signal(sender,instance,created,**kwargs):
 
         from_email = settings.EMAIL_HOST_USER
         to_list = [instance.email]
-
+        
         send_mail(subject, message, from_email, to_list, fail_silently=True)
 
 def signin(request):
