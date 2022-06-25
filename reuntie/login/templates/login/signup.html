@@ -5,43 +5,162 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+            color: #212529;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            padding-top: 10px;
+        }
+        
+        .form-wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 430px;
+            margin-top: 100px;
+        }
+
+        .form-wrapper h3 {
+            font-size: 28px;
+            text-transform: capitalize;
+            margin: 0 0 30px 0;
+            font-weight: 500;
+        }
+
+        .form-group-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group-wrapper .form-group {
+            flex: 1;
+        }
+
+        .form-group-wrapper .form-group + .form-group {
+            margin-left: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: none;
+        }
+
+        .form-group .form-control {
+            display: block;
+            width: 100%;
+            height: 38px;
+            padding: 6px 12px;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 400;
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            padding: 0 10px;
+            font-size: 14px;
+            line-height: 1.5;
+            border-radius: 20px;
+            -webkit-appearance: button;
+            background-color: #28a745;
+            border: 0;
+            width: 100%;
+            margin-top: 30px;
+            opacity: 0.8;
+            height: 30px;
+        }
+
+        .btn-submit:hover {
+            color: #fff;
+            opacity: 1;
+        }
+
+        .logo {
+            display: block;
+            margin: 0 0 20px 0;
+            height: 45px;
+        }
+    </style>
 </head>
 <body>
-
-    {% for message in messages %}
-    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        <strong>Message:</strong> {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+    {% load static %}
+    <div class="main-wrapper">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <strong>Message:</strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        {% endfor %}
+        <div class="form-wrapper">
+            <img src="{% static 'login/Images/logo_icon.png' %}"alt="Logo" class="logo">
+            <h3>Create your account!</h3>
+            <form method="post" action={% url 'signup' %}>
+                {% csrf_token %}
+               <div class="form-group-wrapper">
+                    <div class="form-group">
+                        <label for="fname">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" placeholder="First Name" Required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Last Name" Required>
+                    </div>
+               </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" Required>
+                </div>
+                <div class="form-group">
+                    <label for="pass1">Password</label>
+                    <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Create Your Password" Required>
+                </div>
+                <div class="form-group">
+                    <label for="pass2">Confirm Password</label>
+                    <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirm Your Password" Required>
+                </div>
+                <button type="submit" class="btn btn-submit">Sign Up</button>
+            </form>
+        </div>
     </div>
-    {% endfor %}
-
-    <h3>Create your account!</h3>
-    <form method="post" action={% url 'signup' %}>
-        {% csrf_token %}
-        </div>
-        <div class="form-group">
-            <label for="fname">First Name</label>
-            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" Required>
-        </div>
-        <div class="form-group">
-            <label for="lname">Last Name</label>
-            <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" Required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email Address" Required>
-        </div>
-        <div class="form-group">
-            <label for="pass1">Password</label>
-            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Create Your Password" Required>
-        </div>
-        <div class="form-group">
-            <label for="pass2">Confirm Password</label>
-            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirm Your Password" Required>
-        </div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
-    </form>
 </body>
 </html>
