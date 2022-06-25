@@ -1,3 +1,4 @@
+from operator import mod
 from xmlrpc.client import Boolean
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -23,14 +24,14 @@ class User(AbstractBaseUser,PermissionsMixin):
     REQUIRED_FIELDS= []
 
 class Image(models.Model):
-    image=models.ImageField()
+    image=models.ImageField(upload_to="Images")
     created_at=models.DateTimeField(auto_now_add=True)
 
 
 class Post(models.Model):
 
     body=models.TextField(null=True,blank=True)
-    image=models.ManyToManyField(Image,blank=True,related_name="post_image")
+    image=models.ManyToManyField("Image", related_name="post_image")
     user=models.ForeignKey('User', on_delete=models.CASCADE)
     create_at=models.DateTimeField(auto_now_add=True)
 

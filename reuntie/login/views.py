@@ -1,7 +1,10 @@
 from audioop import reverse
 from django.http import HttpResponseRedirect
+
+from email.mime import image
+from django.http import HttpResponse
 from django.shortcuts import render
-from .models import User
+from .models import User,Image,Post
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate,login,logout
@@ -16,6 +19,38 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def home(request):
+    if not request.user.is_anonymous:
+            all_post=Post.objects.filter(user=request.user)
+            print(all_post)
+            # lst=[]
+            # temp={}
+            # for i in all_post:
+            #     temp[]
+            #     if temp["id"]==i.id:
+            #         img=[]
+            #         temp["body"]=i.body
+            #         img.append(i.image.image.url)
+            #         temp["images"]=img
+            #         lst.append()
+            # print(lst)    
+
+                
+
+
+
+
+            return render (request,'login/index.html',{"posts":all_post})
+
+            
+    # for i in all_post[1].image.all():
+        # print(i.image)
+
+    # for i in all_post:
+    #     for img in i.image.all():
+    #         print(img.image)
+
+
+
     return render (request,'login/index.html')
 
 def signup(request):
@@ -105,4 +140,28 @@ def profile(request):
 
 def thanks(request):
     return render (request,'login/thanks.html')
+
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        body = request.POST.get('body')
+        posts= request.FILES.getlist('post')
+        try:
+            post=Post.objects.create(body=body,user=request.user)
+            for i in posts:
+                img=Image.objects.create(image=i)
+                
+                post.image.add(img)
+                
+            return redirect('home')
+            # return HttpResponseRedirect(reverse('index'))
+        except Exception as e:
+            return HttpResponse(e)
+    else:
+        return HttpResponse("Method must be 'POST'")
+
+
+
+
+
 
